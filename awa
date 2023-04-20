@@ -1,0 +1,140 @@
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+    end
+function antiafk()
+    local vu = game:GetService("VirtualUser")
+        game:GetService("Players").LocalPlayer.Idled:connect(function()
+            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            wait(1)
+            vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+        end)
+    end
+antiafk()
+print("Antiafk has been auto loaded!")
+print("https://komet.space/ru")
+
+local library = loadui()()
+local main = library:CreateMain("Brookhaven RP", "https://komet.space/ru", Enum.KeyCode.RightAlt)
+local tab = main:CreateTab("Главная")
+tab:CreateButton("Большая голова/Длинный персонаж", function ()
+main:CreateNotification("Осторожно!", "Данная функция может кикнуть вас с игры!,", function()
+end)
+main:CreateNotification("Осторожно!", "также для этой функции нужен anthro персонаж", function()
+end)
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local Character = LocalPlayer.Character
+local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+function rm()
+    for i,v in pairs(Character:GetDescendants()) do
+        if v:IsA("BasePart") then
+            if v.Name == "Handle" or v.Name == "Head" then
+                if Character.Head:FindFirstChild("OriginalSize") then
+                    Character.Head.OriginalSize:Destroy()
+                end
+            else
+                for i,cav in pairs(v:GetDescendants()) do
+                    if cav:IsA("Attachment") then
+                        if cav:FindFirstChild("OriginalPosition") then
+                            cav.OriginalPosition:Destroy()  
+                        end
+                    end
+                end
+                v:FindFirstChild("OriginalSize"):Destroy()
+                if v:FindFirstChild("AvatarPartScaleType") then
+                    v:FindFirstChild("AvatarPartScaleType"):Destroy()
+                end
+            end
+        end
+    end
+end
+rm()
+wait(0.5)
+Humanoid:FindFirstChild("BodyProportionScale"):Destroy()
+wait(1)
+rm()
+wait(0.5)
+Humanoid:FindFirstChild("BodyHeightScale"):Destroy()
+wait(1)
+rm()
+wait(0.5)
+Humanoid:FindFirstChild("BodyWidthScale"):Destroy()
+wait(1)
+rm()
+wait(0.5)
+Humanoid:FindFirstChild("BodyDepthScale"):Destroy()
+wait(1)
+rm()
+wait()
+wait(0.5)
+Humanoid:FindFirstChild("HeadScale"):Destroy()
+wait(1)
+end)
+tab:CreateButton("Ноклип", function ()
+    local Plr = game.Players.LocalPlayer
+    for i, q in pairs(Workspace:GetChildren()) do
+                    if q.Name == Plr.Name then
+                    for i, v in pairs(Workspace[Plr.Name]:GetChildren()) do
+                    if v:IsA("BasePart") then
+                    v.CanCollide = false
+        end 
+    end 
+end 
+end
+end)
+local tab = main:CreateTab("Игроки")
+for i,v in next, game.Players:GetChildren() do
+    if v.Character:FindFirstChild("HumanoidRootPart") then
+        if v.Name ~= game.Players.LocalPlayer.Name then
+        tab:CreateButton(v.Name, function ()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character:FindFirstChild("HumanoidRootPart").CFrame
+        end)
+    end
+    end
+end
+local tab = main:CreateTab("Телепорты")
+tab:CreateButton("Полицейский участок", function ()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-143.025, 4.48353, -9.2283)
+end)
+tab:CreateButton("Госпиталь", function ()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-303.913, 4.25636, 11.1072)
+end)
+tab:CreateButton("Школа", function ()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-295.802, 4.48353, 212.413)
+end)
+local tab = main:CreateTab("Вещи")
+for i,v in next, game:GetService("Workspace").WorkspaceCom["001_GiveTools"]:GetDescendants() do
+    if v:IsA("Part") then
+        tab:CreateButton(v.Name, function ()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+        end)
+    end
+end
+
+local move = main:CreateTab("Движение")
+move:CreateTextbox("Скорость бега", function (a)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = a
+    task.wait()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed.Changed:Connect(function ()
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = a
+    end)
+end)
+move:CreateTextbox("Высота прыжка", function (jj)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = jj
+    task.wait()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower.Changed:connect(function ()
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = jj
+    end)
+end)
+move:CreateButton("Беск. прыжок", function ()
+    local Player = game:GetService("Players").LocalPlayer
+local Mouse = Player:GetMouse()
+Mouse.KeyDown:connect(function(k)
+if k:byte() == 32 then
+Humanoid = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+Humanoid:ChangeState("Jumping")
+end
+end)
+end)
+move:CreateButton("Полет", function ()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ModernScripts/FlyRepo/main/Fly"))()
+end)
